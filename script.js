@@ -1,29 +1,8 @@
+import { agentElements } from './agentElements.js';
+
 const playerScoreEl = document.getElementById('playerScore');
 const computerScoreEl = document.getElementById('computerScore');
 const resultText = document.getElementById('result');
-
-const agentElements = {
-  player: {
-    icons: {
-      rock: document.getElementById('playerRock'),
-      paper: document.getElementById('playerPaper'),
-      scissors: document.getElementById('playerScissors'),
-      lizard: document.getElementById('playerLizard'),
-      spock: document.getElementById('playerSpock'),
-    },
-    choiceEl: document.getElementById('playerChoice'),
-  },
-  computer: {
-    icons: {
-      rock: document.getElementById('computerRock'),
-      paper: document.getElementById('computerPaper'),
-      scissors: document.getElementById('computerScissors'),
-      lizard: document.getElementById('computerLizard'),
-      spock: document.getElementById('computerSpock'),
-    },
-    choiceEl: document.getElementById('computerChoice'),
-  },
-};
 
 const allGameIcons = document.querySelectorAll('.far');
 const playerContainer = document.querySelectorAll('.player');
@@ -50,11 +29,6 @@ function setChoice(agent, choice) {
   agentElements[agent].icons[choice].classList.add('selected');
   agentElements[agent].choiceEl.textContent = ` --- ${choice}'`;
   state[agent] = choice;
-
-  /*  playerPaper.classList.add('selected');
-  playerChoiceEl.textContent = ' --- Paper'; */
-
-  console.log(agent, choice);
 }
 
 // Random compuer choice
