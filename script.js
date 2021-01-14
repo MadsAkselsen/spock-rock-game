@@ -1,20 +1,29 @@
 const playerScoreEl = document.getElementById('playerScore');
-const playerChoiceEl = document.getElementById('playerChoice');
 const computerScoreEl = document.getElementById('computerScore');
-const computerChoiceEl = document.getElementById('computerChoice');
 const resultText = document.getElementById('result');
 
-const playerRock = document.getElementById('playerRock');
-const playerPaper = document.getElementById('playerPaper');
-const playerScissors = document.getElementById('playerScissors');
-const playerLizard = document.getElementById('playerLizard');
-const playerSpock = document.getElementById('playerSpock');
-
-const computerRock = document.getElementById('computerRock');
-const computerPaper = document.getElementById('computerPaper');
-const computerScissors = document.getElementById('computerScissors');
-const computerLizard = document.getElementById('computerLizard');
-const computerSpock = document.getElementById('computerSpock');
+const agentElements = {
+  player: {
+    icons: {
+      rock: document.getElementById('playerRock'),
+      paper: document.getElementById('playerPaper'),
+      scissors: document.getElementById('playerScissors'),
+      lizard: document.getElementById('playerLizard'),
+      spock: document.getElementById('playerSpock'),
+    },
+    choiceEl: document.getElementById('playerChoice'),
+  },
+  computer: {
+    icons: {
+      rock: document.getElementById('computerRock'),
+      paper: document.getElementById('computerPaper'),
+      scissors: document.getElementById('computerScissors'),
+      lizard: document.getElementById('computerLizard'),
+      spock: document.getElementById('computerSpock'),
+    },
+    choiceEl: document.getElementById('computerChoice'),
+  },
+};
 
 const allGameIcons = document.querySelectorAll('.far');
 const playerContainer = document.querySelectorAll('.player');
@@ -27,6 +36,8 @@ const choices = {
   spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
 };
 
+let state = { player: '', computer: '' };
+
 // Reset all 'selected' icons
 function resetSelectedIcons() {
   allGameIcons.forEach((icon) => {
@@ -34,35 +45,69 @@ function resetSelectedIcons() {
   });
 }
 
+// set player and computer choice
+function setChoice(agent, choice) {
+  agentElements[agent].icons[choice].classList.add('selected');
+  agentElements[agent].choiceEl.textContent = ` --- ${choice}'`;
+  state[agent] = choice;
+
+  /*  playerPaper.classList.add('selected');
+  playerChoiceEl.textContent = ' --- Paper'; */
+
+  console.log(agent, choice);
+}
+
+// Random compuer choice
+function computerRandomChoice() {
+  const computerChoiceNumber = Math.random();
+  if (computerChoiceNumber < 0.2) {
+    setChoice('computer', 'rock');
+  } else if (computerChoiceNumber <= 0.4) {
+    setChoice('computer', 'paper');
+  } else if (computerChoiceNumber <= 0.6) {
+    setChoice('computer', 'scissors');
+  } else if (computerChoiceNumber <= 0.8) {
+    setChoice('computer', 'lizard');
+  } else {
+    setChoice('computer', 'spock');
+  }
+}
+
+// Call functions to process turn
+function checkResult() {
+  resetSelectedIcons();
+  computerRandomChoice();
+}
+
 // Passing player selection value and styling our icons
 function select(e) {
-  resetSelectedIcons();
-  const playerChoice = e.target.id;
+  // only pick an icon if the clicked element is an icon tag
+  if (e.target.tagName === 'I') {
+    checkResult();
+    const playerChoiceIcon = e.target.id;
 
-  //Add 'selected' styling & playerchoice
-  switch (playerChoice) {
-    case 'playerRock':
-      playerRock.classList.add('selected');
-      playerChoiceEl.textContent = ' --- Rock';
-      break;
-    case 'playerPaper':
-      playerPaper.classList.add('selected');
-      playerChoiceEl.textContent = ' --- Paper';
-      break;
-    case 'playerScissors':
-      playerScissors.classList.add('selected');
-      playerChoiceEl.textContent = ' --- Scissors';
-      break;
-    case 'playerLizard':
-      playerLizard.classList.add('selected');
-      playerChoiceEl.textContent = ' --- Lizard';
-      break;
-    case 'playerSpock':
-      playerSpock.classList.add('selected');
-      playerChoiceEl.textContent = ' --- Spock';
-      break;
-    default:
-      break;
+    //Add 'selected' styling & playerchoice
+    switch (playerChoiceIcon) {
+      case 'playerRock':
+        setChoice('player', 'rock');
+        break;
+      case 'playerPaper':
+        setChoice('player', 'paper');
+        break;
+      case 'playerScissors':
+        setChoice('player', 'scissors');
+        break;
+      case 'playerLizard':
+        setChoice('player', 'lizard');
+        break;
+      case 'playerSpock':
+        setChoice('player', 'spock');
+        break;
+      default:
+        break;
+    }
+    console.log('Player: ', state.player);
+    console.log('Computer: ', state.computer);
   }
 }
 
