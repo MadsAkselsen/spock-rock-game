@@ -57,6 +57,14 @@ h2 {
   cursor: pointer;
 }
 
+#player .far:hover {
+  transform: scale(1.1);
+}
+
+#player .far:active {
+  transform: scale(0.9);
+}
+
 #computer .far,
 #computer .choice {
   color: rgb(216, 27, 90);
@@ -75,6 +83,12 @@ h2 {
   font-size: 30px;
   cursor: pointer;
   margin-left: 50px;
+}
+.reset-icon:hover {
+  transform: scale(1.1);
+}
+.reset-icon:active {
+  transform: scale(0.9);
 }
 
 .result-container {

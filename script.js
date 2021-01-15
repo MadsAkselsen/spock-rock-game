@@ -13,11 +13,6 @@ const choices = {
   spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
 };
 
-const newGameState = {
-  player: { choice: '', points: 0 },
-  computer: { choice: '', points: 0 },
-};
-
 let state = {
   player: { choice: '', points: 0 },
   computer: { choice: '', points: 0 },
@@ -107,7 +102,8 @@ function select(e) {
 
 function reset() {
   resetSelectedIcons();
-  state = newGameState;
+  state.player.points = 0;
+  state.computer.points = 0;
   agentElements.player.playerScoreEl.textContent = state.player.points;
   agentElements.computer.computerScoreEl.textContent = state.computer.points;
   resultText.textContent = '';
