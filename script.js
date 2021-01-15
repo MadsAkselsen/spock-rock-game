@@ -1,8 +1,6 @@
 import { agentElements } from './agentElements.js';
-
-const playerScoreEl = document.getElementById('playerScore');
-const computerScoreEl = document.getElementById('computerScore');
-const resultText = document.getElementById('result');
+const resultText = document.getElementById('resultText');
+const resetEl = document.getElementById('reset');
 
 const allGameIcons = document.querySelectorAll('.far');
 const playerContainer = document.querySelectorAll('.player');
@@ -15,7 +13,15 @@ const choices = {
   spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
 };
 
-let state = { player: '', computer: '' };
+const newGameState = {
+  player: { choice: '', points: 0 },
+  computer: { choice: '', points: 0 },
+};
+
+let state = {
+  player: { choice: '', points: 0 },
+  computer: { choice: '', points: 0 },
+};
 
 // Reset all 'selected' icons
 function resetSelectedIcons() {
@@ -28,7 +34,7 @@ function resetSelectedIcons() {
 function setChoice(agent, choice) {
   agentElements[agent].icons[choice].classList.add('selected');
   agentElements[agent].choiceEl.textContent = ` --- ${choice}'`;
-  state[agent] = choice;
+  state[agent].choice = choice;
 }
 
 // Random compuer choice
@@ -47,42 +53,65 @@ function computerRandomChoice() {
   }
 }
 
+function playerChoice(e) {
+  const playerChoiceIcon = e.target.id;
+
+  //Add 'selected' styling & playerchoice
+  switch (playerChoiceIcon) {
+    case 'playerRock':
+      setChoice('player', 'rock');
+      break;
+    case 'playerPaper':
+      setChoice('player', 'paper');
+      break;
+    case 'playerScissors':
+      setChoice('player', 'scissors');
+      break;
+    case 'playerLizard':
+      setChoice('player', 'lizard');
+      break;
+    case 'playerSpock':
+      setChoice('player', 'spock');
+      break;
+    default:
+      break;
+  }
+}
+
 // Call functions to process turn
-function checkResult() {
-  resetSelectedIcons();
-  computerRandomChoice();
+function determineWinner() {
+  let defeatedOptions = choices[state.player.choice].defeats;
+  if (defeatedOptions.includes(state.computer.choice)) {
+    state.player.points++;
+    agentElements.player.playerScoreEl.textContent = state.player.points;
+    resultText.textContent = 'You Won!';
+  } else if (state.player.choice === state.computer.choice) {
+    resultText.textContent = 'Draw!';
+  } else {
+    state.computer.points++;
+    agentElements.computer.computerScoreEl.textContent = state.computer.points;
+    resultText.textContent = 'Computer Won!';
+  }
 }
 
 // Passing player selection value and styling our icons
 function select(e) {
   // only pick an icon if the clicked element is an icon tag
   if (e.target.tagName === 'I') {
-    checkResult();
-    const playerChoiceIcon = e.target.id;
-
-    //Add 'selected' styling & playerchoice
-    switch (playerChoiceIcon) {
-      case 'playerRock':
-        setChoice('player', 'rock');
-        break;
-      case 'playerPaper':
-        setChoice('player', 'paper');
-        break;
-      case 'playerScissors':
-        setChoice('player', 'scissors');
-        break;
-      case 'playerLizard':
-        setChoice('player', 'lizard');
-        break;
-      case 'playerSpock':
-        setChoice('player', 'spock');
-        break;
-      default:
-        break;
-    }
-    console.log('Player: ', state.player);
-    console.log('Computer: ', state.computer);
+    resetSelectedIcons();
+    computerRandomChoice();
+    playerChoice(e);
+    determineWinner();
   }
 }
 
+function reset() {
+  resetSelectedIcons();
+  state = newGameState;
+  agentElements.player.playerScoreEl.textContent = state.player.points;
+  agentElements.computer.computerScoreEl.textContent = state.computer.points;
+  resultText.textContent = '';
+}
+
 player.addEventListener('click', select);
+resetEl.addEventListener('click', reset);

@@ -8,6 +8,7 @@ export const agentElements = {
       spock: document.getElementById('playerSpock'),
     },
     choiceEl: document.getElementById('playerChoice'),
+    playerScoreEl: document.getElementById('playerScore'),
   },
   computer: {
     icons: {
@@ -18,5 +19,6 @@ export const agentElements = {
       spock: document.getElementById('computerSpock'),
     },
     choiceEl: document.getElementById('computerChoice'),
+    computerScoreEl: document.getElementById('computerScore'),
   },
 };
