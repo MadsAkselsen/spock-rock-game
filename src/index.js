@@ -1,5 +1,5 @@
-import { agentElements } from './agentElements.js';
-import './style.css';
+import { agentElements } from './domElements/agentElements.js';
+import './index.css';
 const resultText = document.getElementById('resultText');
 const resetEl = document.getElementById('reset');
 
