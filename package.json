@@ -1,0 +1,24 @@
+{
+  "name": "spock-rock-game",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadsAkselsen/spock-rock-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MadsAkselsen/spock-rock-game/issues"
+  },
+  "homepage": "https://github.com/MadsAkselsen/spock-rock-game#readme",
+  "devDependencies": {
+    "webpack": "^5.15.0",
+    "webpack-cli": "^4.3.1"
+  }
+}
