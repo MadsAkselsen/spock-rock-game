@@ -1,4 +1,5 @@
 import { agentElements } from './agentElements.js';
+import './style.css';
 const resultText = document.getElementById('resultText');
 const resetEl = document.getElementById('reset');
 
