@@ -1,3 +1,5 @@
+// to use this file go to webpack config and change the entry to index.ts
+
 const resultText = document.getElementById('resultText');
 
 console.log('test');
